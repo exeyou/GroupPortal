@@ -1,5 +1,5 @@
 """
-URL configuration for orm_lesson project.
+URL configuration for config project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -15,8 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from portal import views
+
+app_name = "portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls', namespace="accounts")),
+    path('portal/', include('portal.urls', namespace="portal")),
+    path('', views.HomeView.as_view(), name="home"),
 ]
