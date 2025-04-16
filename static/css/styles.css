@@ -1,0 +1,18 @@
+.top-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 20px;
+}
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px; /* spacing between links */
+}
+
+.nav-links li {
+    display: inline; /* not strictly needed with flex, but can be added */
+}
