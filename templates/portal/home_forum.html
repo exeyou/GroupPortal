@@ -1,0 +1,26 @@
+<!-- portal/home_forum.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Forum</title>
+</head>
+<body>
+    <div class="forum-container">
+        <h1>Welcome to the Forum</h1>
+        <div class="branches">
+            {% for branch in branches %}
+                <div class="branch-card">
+                    <h2><a href="{% url 'portal:branch_detail' branch_id=branch.id %}">{{ branch.title }}</a></h2>
+                    <p>{{ branch.body|truncatewords:30 }}</p>  <!-- Show a truncated version of the body -->
+                    <p>Creator: {{ branch.creator.username }}</p>
+                </div>
+            {% empty %}
+                <p>No branches available. Start by creating one!</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
