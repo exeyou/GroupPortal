@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ branch.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ branch.title }}</h2>
+<p>{{ branch.body }}</p>
+<p><strong>Posted by:</strong> {{ branch.creator }}</p>
+
+<hr>
+
+<h3>Leave a Comment</h3>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="parent_id" id="parent-id-input">
+    <textarea name="content" rows="3" cols="50" placeholder="Write your comment..."></textarea><br>
+    <input type="file" name="media">
+    <button type="submit">Post Comment</button>
+</form>
+
+<hr>
+
+<h3>Comments</h3>
+{% for comment in comments %}
+    {% if not comment.parent %}
+        <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+            <p><strong>{{ comment.author }}</strong> | {{ comment.created_at }}</p>
+            <p>{{ comment.content }}</p>
+            {% if comment.media %}
+                <p><a href="{{ comment.media.url }}" target="_blank">View Attachment</a></p>
+            {% endif %}
+
+            <button class="like-btn" data-id="{{ comment.id }}">
+                {% if comment.id in liked_comment_ids %}❤️{% else %}🤍{% endif %}
+                <span id="like-count-{{ comment.id }}">{{ comment.likes.count }}</span>
+            </button>
+
+            <button class="reply-btn" data-id="{{ comment.id }}">↩️ Reply</button>
+
+            {% if comment.author == request.user %}
+                <form method="POST" action="{% url 'forum:delete_comment' comment.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">🗑️ Delete</button>
+                </form>
+            {% endif %}
+
+            <!-- Replies -->
+            <div style="margin-left: 30px; margin-top: 10px;">
+                {% for reply in comment.replies.all %}
+                    <div style="margin-bottom: 10px; border-left: 2px solid #ccc; padding-left: 10px;">
+                        <p><strong>{{ reply.author }}</strong> | {{ reply.created_at }}</p>
+                        <p>{{ reply.content }}</p>
+                        {% if reply.media %}
+                            <p><a href="{{ reply.media.url }}" target="_blank">View Attachment</a></p>
+                        {% endif %}
+
+                        <button class="like-btn" data-id="{{ reply.id }}">
+                            {% if reply.id in liked_comment_ids %}❤️{% else %}🤍{% endif %}
+                            <span id="like-count-{{ reply.id }}">{{ reply.likes.count }}</span>
+                        </button>
+
+                        {% if reply.author == request.user %}
+                            <form method="POST" action="{% url 'forum:delete_comment' reply.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">🗑️ Delete</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% empty %}
+    <p>No comments yet. Be the first!</p>
+{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.like-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const commentId = this.getAttribute('data-id');
+        fetch("{% url 'forum:like_comment' 0 %}".replace('0', commentId), {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.innerHTML = (data.liked ? '❤️' : '🤍') +
+                ' <span id="like-count-' + commentId + '">' + data.likes_count + '</span>';
+        });
+    });
+});
+
+document.querySelectorAll('.reply-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const commentId = this.getAttribute('data-id');
+        document.getElementById('parent-id-input').value = commentId;
+        document.querySelector('textarea[name="content"]').focus();
+    });
+});
+</script>
+{% endblock %}
