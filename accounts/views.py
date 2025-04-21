@@ -12,23 +12,24 @@ from django.utils.decorators import method_decorator
 from django.utils.timezone import now, timedelta
 from django.views import View
 from django.views.generic import ListView, TemplateView
+from .forms import RegisterForm, LoginForm
 
 def register(request):
     if request.method == "GET":
         form = RegisterForm()
-        return render(request, 'accounts/registrate_page.html', {'form':form})
+        return render(request, 'accounts/register_page.html', {'form':form})
 
     elif request.method == 'POST':
         form = RegisterForm(request.POST)
 
         if form.is_valid():
+            print('registered')
             user = form.save()
             login(request, user)
             return redirect("home")
-
     else:
         form = RegisterForm()
-    return render(request, "accounts/registrate_page.html", {"form":form})
+    return render(request, "accounts/register_page.html", {"form":form})
 
 
 from django.contrib import messages
@@ -53,6 +54,8 @@ def login_view(request):
                 messages.error(request, "Неправильное имя пользователя или пароль.")
 
         return render(request, "accounts/login_page.html", {"form": form})
+    return None
+
 
 def logout_view(request):
     logout(request)
