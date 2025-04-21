@@ -1,0 +1,6 @@
+<h1>Підтвердити видалення</h1>
+<p>Ви впевнені, що хочете видалити "{{ announcement.name }}"?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Так, видалити</button>
+</form>

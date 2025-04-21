@@ -1,0 +1,11 @@
+h1>Оголошення</h1>
+<a href="{% url 'announcement_create' %}">Створити нове</a>
+<ul>
+  {% for a in announcements %}
+    <li>
+      <strong>{{ a.name }}</strong> — {{ a.body }} <br>
+      <a href="{% url 'announcement_edit' a.pk %}">Редагувати</a> |
+      <a href="{% url 'announcement_delete' a.pk %}">Видалити</a>
+    </li>
+  {% endfor %}
+</ul>
