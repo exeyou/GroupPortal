@@ -17,10 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from portal import views as portal_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace="accounts")),
     path('portal/', include('portal.urls', namespace="portal")),
-    path('', portal_views.HomeView.as_view(), name="home"),  # Root view
+    path('', portal_views.HomeView.as_view(), name="home"),# Root view
+    path('gallery/', include('gallery.urls', namespace='gallery')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

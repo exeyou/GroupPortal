@@ -1,0 +1,20 @@
+<nav style="background-color: #f0f0f0; padding: 10px;">
+    <a href="{% url 'gallery:media_gallery' %}" style="margin-right: 15px;">Галерея</a>
+    <a href="{% url 'gallery:upload_media' %}" style="margin-right: 15px;">Завантажити медіа</a>
+    <a href="http://127.0.0.1:8000/admin/gallery/media/?o=3">Модерація</a>
+
+</nav>
+<hr>
+
+<h2>Галерея учнів</h2>
+{% for item in media_files %}
+    {% if item.media_type == 'photo' %}
+        <img src="{{ item.file.url }}" alt="{{ item.description }}" width="200">
+    {% elif item.media_type == 'video' %}
+        <video width="320" height="240" controls>
+            <source src="{{ item.file.url }}" type="video/mp4">
+            Ваш браузер не підтримує відео.
+        </video>
+    {% endif %}
+    <p>{{ item.description }}</p>
+{% endfor %}
