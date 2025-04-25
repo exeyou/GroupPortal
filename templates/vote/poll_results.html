@@ -1,0 +1,7 @@
+<h1>Результати: {{ poll.question }}</h1>
+<ul>
+  {% for choice in choices %}
+    <li>{{ choice.text }} – {{ choice.vote_set.count }} голосів</li>
+  {% endfor %}
+</ul>
+<p>Всього голосів: {{ total_votes }}</p>
