@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace="accounts")),
+    path('announcements/', include('announcement.urls')), 
     path('portal/', include('portal.urls', namespace="portal")),
     path('', portal_views.HomeView.as_view(), name="home"),# Root view
     path('gallery/', include('gallery.urls', namespace='gallery')),
