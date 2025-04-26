@@ -13,6 +13,7 @@
             <ul style="list-style-type: none; padding: 0; display: flex; justify-content: flex-end; margin: 0;">
                 <li style="margin-left: 20px;"><a href="{% url 'forum:home_forum' %}">Forum</a></li>
                 <li style="margin-left: 20px;"><a href="{% url 'gallery:media_gallery' %}">Gallery</a></li>
+                <li style="margin-left: 20px;"><a href="{% url 'events:calendar' %}">Events</a></li>
                 {% if user.is_authenticated %}
                     <li style="margin-left: 20px;"><a href="{% url 'accounts:logout' %}">Logout</a></li>
                 {% else %}

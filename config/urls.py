@@ -26,6 +26,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace="accounts")),
     path('forum/', include('forum.urls', namespace='forum')),
     path('gallery/', include('gallery.urls', namespace='gallery')),
+    path('events/', include('events.urls', namespace='events')),
 ]
 
 if settings.DEBUG:
