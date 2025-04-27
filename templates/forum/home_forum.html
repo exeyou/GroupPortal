@@ -13,7 +13,7 @@
         <div class="branches">
             {% for branch in branches %}
                 <div class="branch-card">
-                    <h2><a href="{% url 'portal:branch_detail' branch_id=branch.id %}">{{ branch.title }}</a></h2>
+                    <h2><a href="{% url 'forum:branch_detail' branch_id=branch.id %}">{{ branch.title }}</a></h2>
                     <p>{{ branch.body|truncatewords:30 }}</p>  <!-- Show a truncated version of the body -->
                     <p>Creator: {{ branch.creator.username }}</p>
                 </div>

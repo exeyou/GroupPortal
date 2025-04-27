@@ -17,8 +17,7 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     media = models.FileField(blank=True, null=True)
-
-
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
 
 
 class Like(models.Model):

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ event.name }}</title>
+</head>
+<body>
+    <h1>{{ event.name }}</h1>
+    <p><strong>Date:</strong> {{ event.date }}</p>
+    <p><strong>Description:</strong></p>
+    <p>{{ event.body }}</p>
+
+    {% if event.media %}
+        {% with event.media.url|lower as media_url %}
+            {% if ".jpg" in media_url or ".jpeg" in media_url or ".png" in media_url or ".gif" in media_url %}
+                <p><strong>Media:</strong></p>
+                <img src="{{ event.media.url }}" alt="Event Media" style="max-width: 500px; max-height: 500px; display: block; margin-top: 10px;">
+            {% else %}
+                <p><strong>Media:</strong> <a href="{{ event.media.url }}" target="_blank">View File</a></p>
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+
+    <p><a href="{% url 'events:calendar' %}">Back to Calendar</a></p>
+</body>
+</html>
