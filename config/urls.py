@@ -24,6 +24,8 @@ urlpatterns = [
     path('', home_views.HomeView.as_view(), name="home"),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace="accounts")),
+    path('announcements/', include('announcement.urls'), namespace='announcements'), 
+    path('portal/', include('portal.urls', namespace="portal")),
     path('forum/', include('forum.urls', namespace='forum')),
     path('gallery/', include('gallery.urls', namespace='gallery')),
     path('vote/', include('vote.urls', namespace='vote')),
