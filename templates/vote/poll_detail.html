@@ -1,0 +1,9 @@
+<h1>{{ poll.question }}</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Голосувати</button>
+</form>
+{% if existing_vote %}
+<p>Ви вже голосували: {{ existing_vote.choice }}</p>
+{% endif %}
