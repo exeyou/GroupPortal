@@ -1,3 +1,7 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ branch.title }}{% endblock %}
+
+{% block content %}
 <h1>Результати: {{ poll.question }}</h1>
 <ul>
   {% for choice in choices %}
@@ -5,3 +9,4 @@
   {% endfor %}
 </ul>
 <p>Всього голосів: {{ total_votes }}</p>
+{% endblock %}

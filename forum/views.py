@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from .models import Branch, Comment, Like
 from django.views.decorators.http import require_POST
 from django.db.models import Count
+from config.utils import extract_youtube_video_id
 
 @login_required
 def home_forum(request):
@@ -25,12 +26,14 @@ def branch_detail(request, branch_id):
         parent_comment = Comment.objects.filter(id=parent_id).first() if parent_id else None
 
         if content:
+            youtube_video_id = extract_youtube_video_id(content)  # <<< New line
             Comment.objects.create(
                 branch=branch,
                 author=request.user,
                 content=content,
                 media=media,
-                parent=parent_comment
+                parent=parent_comment,
+                youtube_video_id=youtube_video_id  # <<< New line
             )
             return redirect('forum:branch_detail', branch_id=branch_id)
 
@@ -42,6 +45,7 @@ def branch_detail(request, branch_id):
         'comments': comments,
         'liked_comment_ids': liked_comment_ids
     })
+
 
 
 

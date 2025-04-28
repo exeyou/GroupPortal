@@ -1,3 +1,7 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ branch.title }}{% endblock %}
+
+{% block content %}
 <nav style="background-color: #f0f0f0; padding: 10px;">
     <a href="{% url 'gallery:media_gallery' %}" style="margin-right: 15px;">Галерея</a>
     <a href="{% url 'gallery:upload_media' %}" style="margin-right: 15px;">Завантажити медіа</a>
@@ -10,3 +14,4 @@
     {{ form.as_p }}
     <button type="submit">Завантажити</button>
 </form>
+{% endblock %}

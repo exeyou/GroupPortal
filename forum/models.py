@@ -18,6 +18,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     media = models.FileField(blank=True, null=True)
     parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
+    youtube_video_id = models.CharField(max_length=50, blank=True, null=True)  # << New field
 
 
 class Like(models.Model):

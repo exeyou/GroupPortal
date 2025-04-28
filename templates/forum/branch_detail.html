@@ -24,16 +24,30 @@
     {% if not comment.parent %}
         <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
             <p><strong>{{ comment.author }}</strong> | {{ comment.created_at }}</p>
-            <p>{{ comment.content }}</p>
-            {% if comment.media %}
-               {% with comment.media.url|lower as media_url %}
-                    {% if ".jpg" in media_url or ".jpeg" in media_url or ".png" in media_url or ".gif" in media_url %}
-                        <img src="{{ comment.media.url }}" alt="Attached Image" style="max-width: 300px; max-height: 300px; display: block; margin-top: 10px;">
-                    {% else %}
-                        <p><a href="{{ comment.media.url }}" target="_blank">📎 View Attachment</a></p>
-                    {% endif %}
-                {% endwith %}
-            {% endif %}
+            <div>
+                <p>{{ comment.content|urlize|linebreaksbr }}</p>
+
+                {% if comment.media %}
+                    {% with comment.media.url|lower as media_url %}
+                        {% if ".jpg" in media_url or ".jpeg" in media_url or ".png" in media_url or ".gif" in media_url %}
+                            <img src="{{ comment.media.url }}" alt="Attached Image" style="max-width: 300px; max-height: 300px; display: block; margin-top: 10px;">
+                        {% elif ".mp4" in media_url or ".webm" in media_url or ".ogg" in media_url %}
+                            <video controls style="max-width: 400px; max-height: 400px; display: block; margin-top: 10px;">
+                                <source src="{{ comment.media.url }}">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% else %}
+                            <p><a href="{{ comment.media.url }}" target="_blank">📎 View Attachment</a></p>
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+
+               {% if comment.youtube_video_id %}
+                    <iframe width="400" height="225" src="https://www.youtube.com/embed/{{ comment.youtube_video_id }}" frameborder="0" allowfullscreen style="margin-top: 10px;"></iframe>
+                {% endif %}
+            </div>
+
+
 
 
             <button class="like-btn" data-id="{{ comment.id }}">

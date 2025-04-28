@@ -1,5 +1,7 @@
-<!DOCTYPE html>
-<html lang="uk">
+{% extends 'base/base.html' %}
+{% block title %}{{ branch.title }}{% endblock %}
+
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <title>Модерація медіа</title>
@@ -29,4 +31,4 @@
 {% endif %}
 
 </body>
-</html>
+{% endblock %}

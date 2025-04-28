@@ -20,7 +20,7 @@ def create_announcement(request):
         form = AnnouncementForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('announcement_list')
+            return redirect('announcements:announcement_list')
     else:
         form = AnnouncementForm()
     return render(request, 'announcement/announcement_form.html', {'form': form})
@@ -33,7 +33,7 @@ def edit_announcement(request, pk):
         form = AnnouncementForm(request.POST, instance=announcement)
         if form.is_valid():
             form.save()
-            return redirect('announcement_list')
+            return redirect('announcements:announcement_list')
     else:
         form = AnnouncementForm(instance=announcement)
     return render(request, 'announcement/announcement_form.html', {'form': form})
@@ -44,7 +44,7 @@ def delete_announcement(request, pk):
     announcement = get_object_or_404(Announcement, pk=pk)
     if request.method == 'POST':
         announcement.delete()
-        return redirect('announcement_list')
+        return redirect('announcements:announcement_list')
     return render(request, 'announcement/confirm_delete.html', {'announcement': announcement})
 
 # Create your views here.
