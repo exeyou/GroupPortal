@@ -1,0 +1,9 @@
+{% block title %}Профіль{% endblock %}
+
+{% block content %}
+<h1>Мій профіль</h1>
+<p>Ім'я: {{ user.first_name }}</p>
+<p>Прізвище: {{ user.last_name }}</p>
+<p>Email: {{ user.email }}</p>
+<a href="{% url 'accounts:profile_edit' %}">Редагувати профіль</a>
+{% endblock %}
