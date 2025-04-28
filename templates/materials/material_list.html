@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ branch.title }}{% endblock %}
+
+{% block content %}
+    <h1>Materials</h1>
+
+    {% for material in materials %}
+        <div class="material">
+            <h2>{{ material.title }}</h2>
+            <div>
+                <p>{{ material.content|urlize|linebreaksbr }}</p>
+
+                {% if material.media %}
+                    {% with material.media.url|lower as media_url %}
+                        {% if ".jpg" in media_url or ".jpeg" in media_url or ".png" in media_url or ".gif" in media_url %}
+                            <img src="{{ material.media.url }}" alt="Attached Image" style="max-width: 300px; max-height: 300px; display: block; margin-top: 10px;">
+                        {% elif ".mp4" in media_url or ".webm" in media_url or ".ogg" in media_url %}
+                            <video controls style="max-width: 400px; max-height: 400px; display: block; margin-top: 10px;">
+                                <source src="{{ material.media.url }}">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% else %}
+                            <p><a href="{{ material.media.url }}" target="_blank">📎 View Attachment</a></p>
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+
+                {% if material.youtube_video_id %}
+                    <iframe width="400" height="225" src="https://www.youtube.com/embed/{{ material.youtube_video_id }}" frameborder="0" allowfullscreen style="margin-top: 10px;"></iframe>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>No materials found.</p>
+    {% endfor %}
+{% endblock %}

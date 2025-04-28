@@ -1,8 +1,17 @@
 from django.db import models
-from accounts.models import User
+from django.contrib.auth.models import User
+from django.contrib import admin
 
-class Materials(models.Model):
-    name = models.CharField(max_length=100)
-    body = models.TextField()
+class Material(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField(blank=True, null=True)  # Для хранения текста с ссылками
+    media = models.FileField(upload_to='materials/', blank=True, null=True)  # Для файлов (видео, изображения)
+    youtube_video_id = models.CharField(max_length=255, blank=True, null=True)  # Для YouTube видео
     created_at = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, related_name="bookings", on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+admin.site.register(Material)

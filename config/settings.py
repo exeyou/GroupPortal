@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'forum',
     'gallery',
     'vote',
-    'events'
+    'events',
+    'materials',
 ]
 
 MIDDLEWARE = [

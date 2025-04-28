@@ -1,18 +1,15 @@
 <h1>Оголошення</h1>
 
-{% if request.user.is_superuser or request.user.groups.filter(name='moderator').exists %}
 <a href="{% url 'announcements:create_announcement' %}">Створити нове</a>
-{% endif %}
 
 <ul>
   {% for a in announcements %}
     <li>
       <strong>{{ a.name }}</strong> — {{ a.body }} <br>
 
-      {% if request.user.is_superuser or request.user.groups.filter(name='moderator').exists %}
-        <a href="{% url 'announcements:edit_announcement' a.pk %}">Редагувати</a> |
-        <a href="{% url 'announcements:delete_announcement' a.pk %}">Видалити</a>
-      {% endif %}
+      <a href="{% url 'announcements:edit_announcement' a.pk %}">Редагувати</a> |
+      <a href="{% url 'announcements:delete_announcement' a.pk %}">Видалити</a>
+
     </li>
   {% endfor %}
 </ul>
