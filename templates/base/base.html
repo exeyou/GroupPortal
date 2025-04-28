@@ -17,6 +17,8 @@
                 <li style="margin-left: 20px;"><a href="{% url 'vote:poll_list' %}">Votes</a></li>
                 <li style="margin-left: 20px;"><a href="{% url 'announcements:announcement_list' %}">Announcements</a></li>
                 <li style="margin-left: 20px;"><a href="{% url 'materials:material_list' %}">Materials</a></li>
+                <li style="margin-left: 20px;"><a href="{% url 'accounts:profile' %}">Profile</a></li>
+                <li style="margin-left: 20px;"><a href="{% url 'grades:grade_list' %}">Grades</a></li>
                 {% if user.is_authenticated %}
                     <li style="margin-left: 20px;"><a href="{% url 'accounts:logout' %}">Logout</a></li>
                 {% else %}

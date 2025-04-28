@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import PortfolioProject, Grade
+from .models import PortfolioProject
 
 
 class LoginForm(forms.Form):
@@ -35,8 +35,3 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'email']
 
-
-class GradeForm(forms.ModelForm):
-    class Meta:
-        model = Grade
-        fields = ['student', 'subject', 'grade']

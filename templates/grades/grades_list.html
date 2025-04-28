@@ -1,8 +1,14 @@
 {% block content %}
 <h1>Оцінки учнів</h1>
 
+<!-- Switcher for grades display -->
+<form method="get">
+  <label for="show_user_grades">Показати тільки мої оцінки:</label>
+  <input type="checkbox" id="show_user_grades" name="show_user_grades" {% if show_user_grades %}checked{% endif %} onchange="this.form.submit()">
+</form>
+
 {% if user.is_staff %}
-  <a href="{% url 'accounts:add_grade' %}">➕ Додати оцінку</a>
+  <a href="{% url 'grades:add_grade' %}">➕ Додати оцінку</a>
 {% endif %}
 
 <table border="1">
@@ -24,8 +30,8 @@
       <td>{{ grade.date }}</td>
       {% if user.is_staff %}
         <td>
-          <a href="{% url 'accounts:edit_grade' grade.pk %}">✏️ Редагувати</a> |
-          <a href="{% url 'accounts:delete_grade' grade.pk %}">🗑️ Видалити</a>
+          <a href="{% url 'grades:edit_grade' grade.pk %}">✏️ Редагувати</a> |
+          <a href="{% url 'grades:delete_grade' grade.pk %}">🗑️ Видалити</a>
         </td>
       {% endif %}
     </tr>

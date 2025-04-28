@@ -30,6 +30,7 @@ urlpatterns = [
     path('vote/', include('vote.urls', namespace='vote')),
     path('events/', include('events.urls', namespace='events')),
     path('materials/', include('materials.urls', namespace='materials')),
+    path('grades/', include('grades.urls', namespace='grades')),
 ]
 
 if settings.DEBUG:
