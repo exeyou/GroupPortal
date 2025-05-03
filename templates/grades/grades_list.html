@@ -1,0 +1,34 @@
+{% block content %}
+<h1>Оцінки учнів</h1>
+
+{% if user.is_staff %}
+  <a href="{% url 'accounts:add_grade' %}">➕ Додати оцінку</a>
+{% endif %}
+
+<table border="1">
+  <tr>
+    <th>Учень</th>
+    <th>Предмет</th>
+    <th>Оцінка</th>
+    <th>Дата</th>
+    {% if user.is_staff %}
+      <th>Дії</th>
+    {% endif %}
+  </tr>
+
+  {% for grade in grades %}
+    <tr>
+      <td>{{ grade.student.username }}</td>
+      <td>{{ grade.subject }}</td>
+      <td>{{ grade.grade }}</td>
+      <td>{{ grade.date }}</td>
+      {% if user.is_staff %}
+        <td>
+          <a href="{% url 'accounts:edit_grade' grade.pk %}">✏️ Редагувати</a> |
+          <a href="{% url 'accounts:delete_grade' grade.pk %}">🗑️ Видалити</a>
+        </td>
+      {% endif %}
+    </tr>
+  {% endfor %}
+</table>
+{% endblock %}

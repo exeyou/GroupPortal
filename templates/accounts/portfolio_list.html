@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<h2>Portal</h2>
+<a href="{% url 'accounts:add_project' %}">Add new project</a>
+<ul>
+  {% for project in projects %}
+    <li>
+      <strong>{{ project.title }}</strong>
+      <a href="{{ project.link }}" target="_blank">🔗</a>
+      <a href="{{ project.file.url }}">📎</a>
+      <img src="{{ project.screenshot.url }}" width="100">
+      <a href="{% url 'accounts:edit_project' project.pk %}">Edit</a>
+      <a href="{% url 'accounts:delete_project' project.pk %}">Delete</a>
+    </li>
+  {% endfor %}
+</ul>

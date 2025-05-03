@@ -1,0 +1,12 @@
+{% block content %}
+<h1>Видалити оцінку</h1>
+
+<p>Ти точно хочеш видалити оцінку "{{ grade }}"?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Так, видалити</button>
+</form>
+
+<a href="{% url 'accounts:grade_list' %}">⬅️ Назад</a>
+{% endblock %}
