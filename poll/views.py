@@ -29,6 +29,11 @@ def survey_page(request, survey_id, page_order):
                 answer = Answer.objects.create(result=survey_result, question=question)
                 answer.choices.set(choices)
                 answer.save()
+                next_page = survey.pages.filter(order__gt=page_order).order_by('order').first()
+                if next_page:
+                    return redirect('poll:survey_page', survey_id=survey.id, page_order=next_page.order)
+                else:
+                    return redirect('poll:survey_thank_you')
             elif question.question_type == 'text':
                 answer = Answer.objects.create(result=survey_result, question=question, text_answer=answer_text)
                 answer.save()
