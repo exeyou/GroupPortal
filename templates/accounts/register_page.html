@@ -3,11 +3,54 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
-    <h2>Register</h2>
+<div class="register-container">
+    <h2>📝 Реєстрація</h2>
+
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
+        <button type="submit">✔️ Зареєструватися</button>
     </form>
-    <p>Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
+
+    <p>Вже є акаунт? <a href="{% url 'accounts:login' %}">Увійти</a></p>
+</div>
 {% endblock %}
+
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url("https://media.giphy.com/media/3o6Zt1OQgx5lz7zvmo/giphy.gif") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+  }
+
+  .register-container {
+    background: rgba(0, 0, 60, 0.85);
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 450px;
+    margin: 100px auto;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 32px;
+    margin-bottom: 25px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  form p {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  input {
+    width: 100%;
+    padding:

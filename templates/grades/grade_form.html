@@ -1,11 +1,92 @@
+{% block title %}
+  {% if form.instance.pk %}Редагувати оцінку{% else %}Додати оцінку{% endif %}
+{% endblock %}
+
 {% block content %}
-<h1>{% if form.instance.pk %}Редагувати оцінку{% else %}Додати оцінку{% endif %}</h1>
+<div class="grade-form-container">
+  <h1>{% if form.instance.pk %}✏️ Редагувати оцінку{% else %}➕ Додати оцінку{% endif %}</h1>
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Зберегти</button>
-</form>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">💾 Зберегти</button>
+  </form>
 
-<a href="{% url 'accounts:grade_list' %}">⬅️ Назад до списку оцінок</a>
+  <a class="back-link" href="{% url 'accounts:grade_list' %}">⬅️ Назад до списку оцінок</a>
+</div>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url("https://media.giphy.com/media/JQEF1jeyvLI6UuBXv0/giphy.gif") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+  }
+
+  .grade-form-container {
+    background: rgba(0, 0, 80, 0.75);
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 500px;
+    margin: 80px auto;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+  }
+
+  .grade-form-container h1 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 30px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  form p {
+    margin-bottom: 20px;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.95);
+    color: #000;
+    font-size: 16px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  button:hover {
+    background: #0056b3;
+  }
+
+  .back-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 16px;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>
 {% endblock %}

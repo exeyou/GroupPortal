@@ -1,34 +1,126 @@
+{% block title %}Оцінки учнів{% endblock %}
+
 {% block content %}
-<h1>Оцінки учнів</h1>
+<div class="grades-container">
+  <h1>📘 Оцінки учнів</h1>
 
-{% if user.is_staff %}
-  <a href="{% url 'accounts:add_grade' %}">➕ Додати оцінку</a>
-{% endif %}
+  {% if user.is_staff %}
+    <a class="add-grade-btn" href="{% url 'accounts:add_grade' %}">➕ Додати оцінку</a>
+  {% endif %}
 
-<table border="1">
-  <tr>
-    <th>Учень</th>
-    <th>Предмет</th>
-    <th>Оцінка</th>
-    <th>Дата</th>
-    {% if user.is_staff %}
-      <th>Дії</th>
-    {% endif %}
-  </tr>
+  <div class="table-wrapper">
+    <table>
+      <tr>
+        <th>Учень</th>
+        <th>Предмет</th>
+        <th>Оцінка</th>
+        <th>Дата</th>
+        {% if user.is_staff %}
+          <th>Дії</th>
+        {% endif %}
+      </tr>
 
-  {% for grade in grades %}
-    <tr>
-      <td>{{ grade.student.username }}</td>
-      <td>{{ grade.subject }}</td>
-      <td>{{ grade.grade }}</td>
-      <td>{{ grade.date }}</td>
-      {% if user.is_staff %}
-        <td>
-          <a href="{% url 'accounts:edit_grade' grade.pk %}">✏️ Редагувати</a> |
-          <a href="{% url 'accounts:delete_grade' grade.pk %}">🗑️ Видалити</a>
-        </td>
-      {% endif %}
-    </tr>
-  {% endfor %}
-</table>
+      {% for grade in grades %}
+        <tr>
+          <td>{{ grade.student.username }}</td>
+          <td>{{ grade.subject }}</td>
+          <td>{{ grade.grade }}</td>
+          <td>{{ grade.date }}</td>
+          {% if user.is_staff %}
+            <td>
+              <a href="{% url 'accounts:edit_grade' grade.pk %}">✏️</a>
+              <a href="{% url 'accounts:delete_grade' grade.pk %}">🗑️</a>
+            </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url("https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+  }
+
+  .grades-container {
+    background: rgba(0, 0, 60, 0.8);
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 900px;
+    margin: 60px auto;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .add-grade-btn {
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+  .add-grade-btn:hover {
+    background: #0056b3;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.95);
+    color: #000;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 12px 16px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+  }
+
+  th {
+    background: #0072ff;
+    color: white;
+  }
+
+  tr:hover {
+    background: #f0f8ff;
+  }
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 5px;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
 {% endblock %}

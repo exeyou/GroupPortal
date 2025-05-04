@@ -1,10 +1,75 @@
 {% block title %}Редагувати профіль{% endblock %}
 
 {% block content %}
-<h1>Редагувати профіль</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Зберегти</button>
-</form>
+<div class="edit-profile-container">
+  <h1>✏️ Редагувати профіль</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">💾 Зберегти</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url("https://i0.wp.com/boingboing.net/wp-content/uploads/2021/05/typingfast.gif?fit=1&ssl=1&resize=600%2C4000") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+  }
+
+  .edit-profile-container {
+    background: rgba(0, 0, 60, 0.75);
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 500px;
+    margin: 80px auto;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+  }
+
+  .edit-profile-container h1 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 30px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  form p {
+    margin-bottom: 20px;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.9);
+    color: #000;
+    font-size: 16px;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  button:hover {
+    background: #0056b3;
+  }
+</style>
 {% endblock %}

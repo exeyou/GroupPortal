@@ -1,14 +1,94 @@
-<h2>Portal</h2>
-<a href="{% url 'accounts:add_project' %}">Add new project</a>
-<ul>
-  {% for project in projects %}
-    <li>
-      <strong>{{ project.title }}</strong>
-      <a href="{{ project.link }}" target="_blank">🔗</a>
-      <a href="{{ project.file.url }}">📎</a>
-      <img src="{{ project.screenshot.url }}" width="100">
-      <a href="{% url 'accounts:edit_project' project.pk %}">Edit</a>
-      <a href="{% url 'accounts:delete_project' project.pk %}">Delete</a>
-    </li>
-  {% endfor %}
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Portal</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      background: url("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzNhZTdiZTZmMjU1NTI0ZjA4ZTMwOGJjYzdmM2U2MWJmZTM0M2IwMCZjdD1n/qgQUggAC3Pfv687qPC/giphy.gif") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 64, 0.7);
+      min-height: 100vh;
+      padding: 40px;
+    }
+
+    h2 {
+      font-size: 48px;
+      text-align: center;
+      background: linear-gradient(90deg, #4facfe, #00f2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 40px;
+    }
+
+    a {
+      color: #66ccff;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    li {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    strong {
+      font-size: 24px;
+    }
+
+    img {
+      max-width: 200px;
+      border-radius: 8px;
+    }
+
+    .top-link {
+      display: block;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h2>Portal</h2>
+    <a class="top-link" href="{% url 'accounts:add_project' %}">➕ Add new project</a>
+    <ul>
+      {% for project in projects %}
+        <li>
+          <strong>{{ project.title }}</strong>
+          <div>
+            <a href="{{ project.link }}" target="_blank">🔗 Link</a>
+            <a href="{{ project.file.url }}">📎 File</a>
+            <a href="{% url 'accounts:edit_project' project.pk %}">✏️ Edit</a>
+            <a href="{% url 'accounts:delete_project' project.pk %}">🗑️ Delete</a>
+          </div>
+          <img src="{{ project.screenshot.url }}" alt="Screenshot">
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>

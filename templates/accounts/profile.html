@@ -1,9 +1,63 @@
 {% block title %}Профіль{% endblock %}
 
 {% block content %}
-<h1>Мій профіль</h1>
-<p>Ім'я: {{ user.first_name }}</p>
-<p>Прізвище: {{ user.last_name }}</p>
-<p>Email: {{ user.email }}</p>
-<a href="{% url 'accounts:profile_edit' %}">Редагувати профіль</a>
+<div class="profile-container">
+  <h1>👤 Мій профіль</h1>
+  <p><strong>Ім'я:</strong> {{ user.first_name }}</p>
+  <p><strong>Прізвище:</strong> {{ user.last_name }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <a href="{% url 'accounts:profile_edit' %}" class="edit-button">✏️ Редагувати профіль</a>
+</div>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url("https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+  }
+
+  .profile-container {
+    background: rgba(0, 0, 50, 0.7);
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 500px;
+    margin: 80px auto;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+  }
+
+  .profile-container h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .profile-container p {
+    font-size: 18px;
+    margin: 15px 0;
+  }
+
+  .edit-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 25px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+  }
+
+  .edit-button:hover {
+    background: #0056b3;
+  }
+</style>
 {% endblock %}

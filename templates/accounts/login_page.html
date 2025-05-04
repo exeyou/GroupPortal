@@ -3,10 +3,11 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <h2>Login</h2>
+<div class="login-container">
+    <h2>🔐 Вхід</h2>
 
     {% if messages %}
-        <ul>
+        <ul class="messages">
         {% for message in messages %}
             <li>{{ message }}</li>
         {% endfor %}
@@ -16,8 +17,88 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Login</button>
+        <button type="submit">➡️ Увійти</button>
     </form>
 
-    <p>Don't have an account? <a href="{% url 'accounts:register' %}">Register here</a></p>
+    <p>Немає акаунта? <a href="{% url 'accounts:register' %}">Зареєструйся тут</a></p>
+</div>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url("https://media.giphy.com/media/QpVUMRUJGokfqXyfa1/giphy.gif") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+  }
+
+  .login-container {
+    background: rgba(0, 0, 60, 0.85);
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 450px;
+    margin: 100px auto;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 32px;
+    margin-bottom: 25px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  form p {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.9);
+    color: #000;
+    font-size: 16px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+
+  button:hover {
+    background: #0056b3;
+  }
+
+  .messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    color: #ffcccb;
+  }
+
+  a {
+    color: #aad4ff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
 {% endblock %}
