@@ -31,6 +31,7 @@ urlpatterns = [
     path('events/', include('events.urls', namespace='events')),
     path('materials/', include('materials.urls', namespace='materials')),
     path('grades/', include('grades.urls', namespace='grades')),
+    path('poll/', include('poll.urls', namespace='poll')),
 ]
 
 if settings.DEBUG:

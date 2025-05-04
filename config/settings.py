@@ -16,7 +16,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -39,15 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "crispy_forms",
-    "crispy_bootstrap5",
     'accounts',
     'forum',
+    "crispy_forms",
+    "crispy_bootstrap5",
     'gallery',
     'vote',
     'events',
     'materials',
     'grades',
+    'poll',
+    'nested_admin'
 ]
 
 MIDDLEWARE = [
@@ -79,8 +80,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-
 
 
 # Database

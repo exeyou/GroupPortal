@@ -1,0 +1,14 @@
+{% block content %}
+  <h1>Доступні опитування</h1>
+  <ul>
+    {% for survey in surveys %}
+      <li>
+        <strong>{{ survey.title }}</strong><br>
+        {{ survey.description }}<br>
+        <a href="{% url 'poll:survey_page' survey.id 1 %}">Пройти опитування</a>
+      </li>
+    {% empty %}
+      <li>Наразі немає активних опитувань.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

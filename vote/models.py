@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import User
-1
+
 class Poll(models.Model):
     question = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -26,6 +26,3 @@ class Vote(models.Model):
 
     class Meta:
         unique_together = ('user', 'poll')
-
-
-
