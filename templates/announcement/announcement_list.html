@@ -1,15 +1,22 @@
-<h1>Оголошення</h1>
+{% extends 'base/base.html' %}
+{% block title %}
+    Оголошення
+{% endblock %}
 
-<a href="{% url 'announcements:create_announcement' %}">Створити нове</a>
+{% block content %}
+<h1 style="text-align: center; color: #4CAF50; font-size: 32px; margin-bottom: 30px; font-weight: bold;">
+    Оголошення
+</h1>
 
-<ul>
+<ul style="list-style: none; padding: 0; max-width: 800px; margin: 0 auto;">
   {% for a in announcements %}
-    <li>
-      <strong>{{ a.name }}</strong> — {{ a.body }} <br>
-
-      <a href="{% url 'announcements:edit_announcement' a.pk %}">Редагувати</a> |
-      <a href="{% url 'announcements:delete_announcement' a.pk %}">Видалити</a>
-
+    <li style="background-color: #ffffff; margin-bottom: 20px; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s;">
+      <strong style="font-size: 24px; color: #333;">{{ a.name }}</strong><br>
+      <p style="color: #666; margin-top: 10px; font-size: 16px; line-height: 1.6;">{{ a.body }}</p>
     </li>
+  {% empty %}
+    <li style="text-align: center; color: #999; font-size: 18px;">Немає оголошень для відображення.</li>
   {% endfor %}
 </ul>
+
+{% endblock %}

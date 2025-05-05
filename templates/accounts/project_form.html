@@ -1,8 +1,16 @@
+{% extends 'base/base.html' %}
+{% block title %}Створити/Редагувати Проект{% endblock %}
+
 {% block content %}
-  <h2>Додати проєкт</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Зберегти</button>
-  </form>
+<div style="max-width: 800px; margin: 60px auto; text-align: center; padding: 30px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <h1 style="font-size: 36px; margin-bottom: 20px;">📂 {{ form.instance.pk|yesno:"Редагувати,Створити" }} Проект</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="padding: 12px 24px; background-color: #4CAF50; color: white; font-size: 18px; border: none; border-radius: 6px;">
+            💾 Зберегти проект
+        </button>
+    </form>
+</div>
 {% endblock %}

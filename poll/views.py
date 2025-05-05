@@ -1,10 +1,8 @@
 # views.py
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Survey, SurveyPage, Question, SurveyResult, Answer, Choice
-from .forms import DynamicSurveyForm
-from django.contrib.auth.decorators import login_required
-from .forms import AnswerForm
+from .models import Survey, Question, SurveyResult, Answer
 
+from django.contrib.auth.decorators import login_required
 
 def poll_home(request):
     surveys = Survey.objects.filter(is_active=True)
@@ -13,43 +11,38 @@ def poll_home(request):
 def survey_thank_you(request):
     return render(request, 'poll/survey_thank_you.html')
 
+@login_required
+def survey_question(request, survey_id, question_order):
+    survey = get_object_or_404(Survey, id=survey_id)
+    questions = survey.questions.order_by('order')  # FIXED here!
+    question_list = list(questions)
 
-def survey_page(request, survey_id, page_order):
-    survey = Survey.objects.get(id=survey_id)
-    page = survey.pages.get(order=page_order)
-    questions = page.questions.all()
+    if question_order < 1 or question_order > len(question_list):
+        return redirect('poll:survey_thank_you')
+
+    current_question = question_list[question_order - 1]
 
     if request.method == 'POST':
         survey_result, created = SurveyResult.objects.get_or_create(user=request.user, survey=survey)
 
-        for question in questions:
-            answer_text = request.POST.get(f"question_{question.id}")
-            if question.question_type == 'radio' or question.question_type == 'checkbox':
-                choices = request.POST.getlist(f"question_{question.id}")
-                answer = Answer.objects.create(result=survey_result, question=question)
-                answer.choices.set(choices)
-                answer.save()
-                next_page = survey.pages.filter(order__gt=page_order).order_by('order').first()
-                if next_page:
-                    return redirect('poll:survey_page', survey_id=survey.id, page_order=next_page.order)
-                else:
-                    return redirect('poll:survey_thank_you')
-            elif question.question_type == 'text':
-                answer = Answer.objects.create(result=survey_result, question=question, text_answer=answer_text)
-                answer.save()
+        if current_question.question_type in ['radio', 'checkbox']:
+            selected_choices = request.POST.getlist(f"question_{current_question.id}")
+            if selected_choices:
+                answer = Answer.objects.create(result=survey_result, question=current_question)
+                answer.choices.set(selected_choices)
+        else:
+            text = request.POST.get(f"question_{current_question.id}", '')
+            if text:
+                Answer.objects.create(result=survey_result, question=current_question, text_answer=text)
 
-        return redirect('poll:survey_thank_you')
+        if question_order < len(question_list):
+            return redirect('poll:survey_question', survey_id=survey.id, question_order=question_order + 1)
+        else:
+            return redirect('poll:survey_thank_you')
 
     return render(request, 'poll/survey_page.html', {
         'survey': survey,
-        'page': page,
-        'questions': questions,
+        'question': current_question,
+        'question_order': question_order,
+        'total_questions': len(question_list),
     })
-
-
-@login_required
-def survey_done(request, survey_id):
-    survey = get_object_or_404(Survey, id=survey_id)
-    return render(request, 'survey_page.html', {'survey': survey})
-
-

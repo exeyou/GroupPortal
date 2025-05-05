@@ -1,12 +1,79 @@
+{% block title %}Видалити оцінку{% endblock %}
+
 {% block content %}
-<h1>Видалити оцінку</h1>
+<div class="delete-grade-container">
+  <h1>🗑️ Видалити оцінку</h1>
 
-<p>Ти точно хочеш видалити оцінку "{{ grade }}"?</p>
+  <p class="confirm-text">Ти точно хочеш видалити оцінку <strong>"{{ grade }}"</strong>?</p>
 
-<form method="post">
-  {% csrf_token %}
-  <button type="submit">Так, видалити</button>
-</form>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="delete-button">✅ Так, видалити</button>
+  </form>
 
-<a href="{% url 'grades:grade_list' %}">⬅️ Назад</a>
+  <a class="back-link" href="{% url 'grades:grade_list' %}">⬅️ Назад</a>
+</div>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: url("https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+  }
+
+  .delete-grade-container {
+    background: rgba(0, 0, 60, 0.8);
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 500px;
+    margin: 80px auto;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 30px;
+    margin-bottom: 25px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .confirm-text {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+
+  .delete-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    background: #ff4d4d;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .delete-button:hover {
+    background: #cc0000;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #aad4ff;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>
 {% endblock %}

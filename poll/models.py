@@ -1,7 +1,6 @@
+# models.py
 from django.db import models
 from accounts.models import User
-
-
 
 class Survey(models.Model):
     title = models.CharField(max_length=255)
@@ -12,28 +11,18 @@ class Survey(models.Model):
     def __str__(self):
         return self.title
 
-
-class SurveyPage(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='pages')
-    order = models.PositiveIntegerField()
-
-    def __str__(self):
-        return f"Page {self.order} of {self.survey.title}"
-
-
 class Question(models.Model):
-    page = models.ForeignKey(SurveyPage, on_delete=models.CASCADE, related_name='questions')
-    survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE,  default=1)
+    survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)
     text = models.CharField(max_length=255)
     question_type = models.CharField(max_length=50, choices=[
         ('text', 'Text'),
         ('radio', 'Single Choice'),
         ('checkbox', 'Multiple Choice'),
     ])
+    order = models.PositiveIntegerField(default=1)  # NEW: Defines question order inside the survey
 
     def __str__(self):
         return self.text
-
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
@@ -42,7 +31,6 @@ class Choice(models.Model):
     def __str__(self):
         return self.text
 
-
 class SurveyResult(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
@@ -50,7 +38,6 @@ class SurveyResult(models.Model):
 
     class Meta:
         unique_together = ('user', 'survey')
-
 
 class Answer(models.Model):
     result = models.ForeignKey(SurveyResult, on_delete=models.CASCADE, related_name='answers')

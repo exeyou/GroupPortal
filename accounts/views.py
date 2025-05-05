@@ -112,7 +112,7 @@ def profile_edit(request):
         form = UserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('accounts:profile')  # Назва урла
+            return redirect('accounts:profile')
     else:
         form = UserUpdateForm(instance=request.user)
     return render(request, 'accounts/profile_edit.html', {'form': form})

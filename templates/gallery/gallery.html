@@ -2,24 +2,28 @@
 {% block title %}{{ branch.title }}{% endblock %}
 
 {% block content %}
-<nav style="background-color: #f0f0f0; padding: 10px;">
-    <a href="{% url 'gallery:media_gallery' %}" style="margin-right: 15px;">Галерея</a>
-    <a href="{% url 'gallery:upload_media' %}" style="margin-right: 15px;">Завантажити медіа</a>
-    <a href="http://127.0.0.1:8000/admin/gallery/media/?o=3">Модерація</a>
-
+<nav style="background-color: #f0f0f0; padding: 10px; text-align: center;">
+    <a href="{% url 'gallery:media_gallery' %}" style="margin-right: 15px; font-size: 16px; font-weight: bold; color: #4CAF50; text-decoration: none;">Галерея</a>
+    <a href="{% url 'gallery:upload_media' %}" style="margin-right: 15px; font-size: 16px; font-weight: bold; color: #4CAF50; text-decoration: none;">Завантажити медіа</a>
+    <a href="http://127.0.0.1:8000/admin/gallery/media/?o=3" style="font-size: 16px; font-weight: bold; color: #4CAF50; text-decoration: none;">Модерація</a>
 </nav>
 <hr>
 
-<h2>Галерея учнів</h2>
-{% for item in media_files %}
-    {% if item.media_type == 'photo' %}
-        <img src="{{ item.file.url }}" alt="{{ item.description }}" width="200">
-    {% elif item.media_type == 'video' %}
-        <video width="320" height="240" controls>
-            <source src="{{ item.file.url }}" type="video/mp4">
-            Ваш браузер не підтримує відео.
-        </video>
-    {% endif %}
-    <p>{{ item.description }}</p>
-{% endfor %}
+<h2 style="text-align: center; font-size: 24px; color: #333;">Галерея учнів</h2>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+    {% for item in media_files %}
+        <div style="margin: 15px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; text-align: center; width: 220px;">
+            {% if item.media_type == 'photo' %}
+                <img src="{{ item.file.url }}" alt="{{ item.description }}" style="max-width: 100%; border-radius: 8px;">
+            {% elif item.media_type == 'video' %}
+                <video width="100%" height="auto" controls style="border-radius: 8px;">
+                    <source src="{{ item.file.url }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            {% endif %}
+            <p style="font-size: 14px; color: #555; margin-top: 10px;">{{ item.description }}</p>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

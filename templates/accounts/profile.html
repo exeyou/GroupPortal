@@ -1,9 +1,24 @@
-{% block title %}Профіль{% endblock %}
+{% extends 'base/base.html' %}
+{% block title %}Мій Профіль{% endblock %}
 
 {% block content %}
-<h1>Мій профіль</h1>
-<p>Ім'я: {{ user.first_name }}</p>
-<p>Прізвище: {{ user.last_name }}</p>
-<p>Email: {{ user.email }}</p>
-<a href="{% url 'accounts:profile_edit' %}">Редагувати профіль</a>
+<div style="max-width: 600px; margin: 60px auto; text-align: center; padding: 30px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <h1 style="font-size: 36px; margin-bottom: 20px;">👤 Профіль користувача</h1>
+
+    <p style="font-size: 20px; margin-bottom: 10px;"><strong>Ім'я:</strong> {{ user.first_name }}</p>
+    <p style="font-size: 20px; margin-bottom: 10px;"><strong>Прізвище:</strong> {{ user.last_name }}</p>
+    <p style="font-size: 20px; margin-bottom: 20px;"><strong>Email:</strong> {{ user.email }}</p>
+
+    <hr style="margin: 30px 0;">
+
+    <p style="font-size: 18px; color: #555;">Тримайте ваш профіль актуальним. Ви можете змінити свої дані у будь-який момент!</p>
+
+    <a href="{% url 'accounts:profile_edit' %}" style="display: inline-block; margin-top: 25px; padding: 12px 24px; background-color: #2196F3; color: white; font-size: 18px; text-decoration: none; border-radius: 6px;">
+        ✏️ Редагувати профіль
+    </a>
+
+    <a href="{% url 'accounts:add_project' %}" style="display: inline-block; margin-top: 25px; padding: 12px 24px; background-color: #4CAF50; color: white; font-size: 18px; text-decoration: none; border-radius: 6px;">
+        📂 Створити портфоліо
+    </a>
+</div>
 {% endblock %}

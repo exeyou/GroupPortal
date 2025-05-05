@@ -2,56 +2,46 @@
 {% block title %}{{ branch.title }}{% endblock %}
 
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <title>Event Calendar</title>
+<h1 style="text-align: center; color: #4CAF50; font-size: 32px; margin-bottom: 30px; font-weight: bold;">
+    Календар Подій
+</h1>
 
-    <!-- FullCalendar CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+<div id="calendar" style="max-width: 1000px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
 
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-    </style>
-</head>
-<body>
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
-    <h1>Event Calendar</h1>
-    <div id="calendar"></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar');
+        const events = {{ events_json|safe }};
 
-    <!-- FullCalendar JS -->
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const calendarEl = document.getElementById('calendar');
-            const events = {{ events_json|safe }};
-
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                events: events,
-                eventClick: function(info) {
-                    if (info.event.url) {
-                        window.open(info.event.url, '_blank');
-                        info.jsEvent.preventDefault();
-                    }
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: events,
+            eventClick: function(info) {
+                if (info.event.url) {
+                    // Open link in the same tab (no _blank!)
+                    window.location.href = info.event.url;
+                    info.jsEvent.preventDefault();
                 }
-            });
-
-            calendar.render();
+            },
+            eventColor: '#4CAF50',  // green event color
+            eventTextColor: '#ffffff', // white text inside event
+            nowIndicator: true,  // show current time
+            selectable: false,   // no date selection
+            editable: false,     // prevent dragging events
         });
-    </script>
-</body>
+
+        calendar.render();
+    });
+</script>
 {% endblock %}

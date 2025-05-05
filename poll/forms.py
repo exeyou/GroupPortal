@@ -25,3 +25,8 @@ class DynamicSurveyForm(forms.Form):
                     choices = [(choice.id, choice.text) for choice in question.choices.all()]
                     self.fields[f'question_{question.id}'] = forms.MultipleChoiceField(label=question.text, choices=choices, widget=forms.CheckboxSelectMultiple)
 
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['page', 'text', 'question_type']

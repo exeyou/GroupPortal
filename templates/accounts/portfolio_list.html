@@ -1,14 +1,50 @@
-<h2>Portal</h2>
-<a href="{% url 'accounts:add_project' %}">Add new project</a>
-<ul>
-  {% for project in projects %}
-    <li>
-      <strong>{{ project.title }}</strong>
-      <a href="{{ project.link }}" target="_blank">🔗</a>
-      <a href="{{ project.file.url }}">📎</a>
-      <img src="{{ project.screenshot.url }}" width="100">
-      <a href="{% url 'accounts:edit_project' project.pk %}">Edit</a>
-      <a href="{% url 'accounts:delete_project' project.pk %}">Delete</a>
-    </li>
-  {% endfor %}
-</ul>
+{% extends 'base/base.html' %}
+{% block title %}Моє Портфоліо{% endblock %}
+
+{% block content %}
+<div style="max-width: 1200px; margin: 60px auto; padding: 30px; background-color: #f9f9f9; border-radius: 10px;">
+    <h1 style="font-size: 36px; text-align: center; margin-bottom: 30px;">📂 Моє Портфоліо</h1>
+
+    {% if projects %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px;">
+            {% for project in projects %}
+            <div style="border: 1px solid #ddd; border-radius: 10px; background: white; overflow: hidden; display: flex; flex-direction: column;">
+                {% if project.screenshot %}
+                    <img src="{{ project.screenshot.url }}" alt="Project Screenshot" style="width: 100%; height: 200px; object-fit: cover;">
+                {% endif %}
+                <div style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column;">
+                    <h2 style="font-size: 24px; margin-bottom: 10px;">{{ project.title }}</h2>
+                    <p style="flex-grow: 1; font-size: 16px; color: #555;">{{ project.description }}</p>
+
+                    {% if project.link %}
+                        <p style="margin-top: 10px;">
+                            🔗 <a href="{{ project.link }}" target="_blank" style="color: #2196F3; word-break: break-all;">Перейти за посиланням</a>
+                        </p>
+                    {% endif %}
+
+                    {% if project.file %}
+                        <p style="margin-top: 10px;">
+                            📄 <a href="{{ project.file.url }}" download style="color: #4CAF50;">Завантажити файл</a>
+                        </p>
+                    {% endif %}
+
+                    <div style="margin-top: auto;">
+                        <a href="{% url 'accounts:edit_project' pk=project.pk %}" style="margin-top: 20px; display: block; padding: 10px; background-color: #2196F3; color: white; text-align: center; text-decoration: none; border-radius: 6px;">
+                            ✏️ Редагувати
+                        </a>
+                        <form method="POST" action="{% url 'accounts:delete_project' pk=project.pk %}" style="margin-top: 10px;">
+                            {% csrf_token %}
+                            <button type="submit" style="width: 100%; padding: 10px; background-color: #f44336; color: white; border: none; border-radius: 6px;">
+                                ❌ Видалити
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="text-align: center; font-size: 18px;">У вас ще немає проектів у портфоліо. <a href="{% url 'accounts:add_project' %}" style="color: #2196F3;">Створити перший проект</a></p>
+    {% endif %}
+</div>
+{% endblock %}

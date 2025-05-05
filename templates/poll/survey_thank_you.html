@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Дякуємо за участь!</title>
-</head>
-<body>
-    <h1>Дякуємо за проходження опитування!</h1>
-    <p>Ваші відповіді були успішно збережені. Ми вдячні за вашу участь!</p>
-    <a href="/">Повернутись на головну</a>
-</body>
-</html>
+{% extends 'base/base.html' %}
+{% block title %}Дякуємо за участь!{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center; color: #4CAF50; font-size: 32px;">Дякуємо за проходження опитування!</h1>
+<p style="text-align: center; color: #555; font-size: 20px; margin-top: 20px;">Ваші відповіді були успішно збережені. Ми вдячні за вашу участь!</p>
+
+<div style="text-align: center; margin-top: 30px;">
+  <a href="/" style="color: #007bff; font-size: 18px; text-decoration: underline;">Повернутись на головну</a>
+</div>
+{% endblock %}

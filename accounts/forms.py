@@ -29,6 +29,16 @@ class ProjectForm(forms.ModelForm):
         model = PortfolioProject
         fields = ['title', 'description', 'screenshot', 'link', 'file']
 
+    # Optionally validate if there's no link or file provided.
+    def clean(self):
+        cleaned_data = super().clean()
+        link = cleaned_data.get("link")
+        file = cleaned_data.get("file")
+        if not link and not file:
+            raise forms.ValidationError("You must provide at least one of link or file.")
+        return cleaned_data
+
+
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:

@@ -1,8 +1,21 @@
+{% extends 'base/base.html' %}
+{% block title %}Підтвердити Видалення{% endblock %}
+
 {% block content %}
-  <h2>Видалити проєкт "{{ project.title }}"?</h2>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit">Так, видалити</button>
-    <a href="{% url 'accounts:my_portfolio' %}">Скасувати</a>
-  </form>
+<div style="max-width: 600px; margin: 60px auto; text-align: center; padding: 30px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <h1 style="font-size: 36px;">❌ Видалити Проект</h1>
+
+    <p>Ви впевнені, що хочете видалити проект "{{ project.title }}"?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" style="padding: 12px 24px; background-color: #f44336; color: white; font-size: 18px; border: none; border-radius: 6px;">
+            Так, видалити
+        </button>
+    </form>
+
+    <a href="{% url 'accounts:my_portfolio' %}" style="margin-top: 25px; display: inline-block; padding: 12px 24px; background-color: #2196F3; color: white; font-size: 18px; text-decoration: none; border-radius: 6px;">
+        ↩️ Назад до портфоліо
+    </a>
+</div>
 {% endblock %}
