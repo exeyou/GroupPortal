@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ branch.title }}{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center; color: #333; font-size: 28px; margin-bottom: 20px;">{{ poll.question }}</h1>
+
+<form method="post" style="max-width: 500px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px; transition: background-color 0.3s;">
+        Голосувати
+    </button>
+</form>
+
+{% if existing_vote %}
+<p style="text-align: center; margin-top: 20px; color: #666;">Ви вже голосували: <strong>{{ existing_vote.choice }}</strong></p>
+{% endif %}
+{% endblock %}

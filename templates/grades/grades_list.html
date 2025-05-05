@@ -1,0 +1,146 @@
+{% block content %}
+<div class="grades-container">
+  <h1>📘 Оцінки учнів</h1>
+
+  <div class="filter-section">
+    <label>
+      <input type="checkbox" id="myGradesOnly" onchange="toggleGrades()" style="margin-right: 8px;">
+      Показати тільки мої оцінки
+    </label>
+  </div>
+
+  <div class="table-wrapper">
+    <table id="gradesTable">
+      <thead>
+        <tr>
+          <th>Учень</th>
+          <th>Предмет</th>
+          <th>Оцінка</th>
+          <th>Дата</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for grade in grades %}
+          <tr data-student="{{ grade.student.username }}">
+            <td>{{ grade.student.username }}</td>
+            <td>{{ grade.subject }}</td>
+            <td>{{ grade.grade }}</td>
+            <td>{{ grade.date }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" style="text-align:center;">Немає оцінок для відображення.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="return-button-container">
+    <a href="{% url 'home' %}" class="return-button">🏠 Повернутися на головну</a>
+  </div>
+</div>
+
+<script>
+  function toggleGrades() {
+    const showMyGradesOnly = document.getElementById('myGradesOnly').checked;
+    const rows = document.querySelectorAll('#gradesTable tbody tr');
+    const currentUser = "{{ user.username }}";  // Django will insert the username
+
+    rows.forEach(row => {
+      const student = row.getAttribute('data-student');
+      if (showMyGradesOnly && student !== currentUser) {
+        row.style.display = 'none';
+      } else {
+        row.style.display = '';
+      }
+    });
+  }
+</script>
+{% endblock %}
+
+{% block extra_style %}
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+  }
+
+  .grades-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 1000px;
+    margin: 60px auto;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #4CAF50;
+    font-weight: bold;
+  }
+
+  .filter-section {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fafafa;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  thead {
+    background: #4CAF50;
+    color: white;
+  }
+
+  th, td {
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  td {
+    font-size: 16px;
+  }
+
+  .return-button-container {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .return-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .return-button:hover {
+    background-color: #45a049;
+  }
+</style>
+{% endblock %}
