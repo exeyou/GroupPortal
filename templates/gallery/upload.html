@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ branch.title }}{% endblock %}
+
+{% block content %}
+<nav style="background-color: #f0f0f0; padding: 10px; text-align: center;">
+    <a href="{% url 'gallery:media_gallery' %}" style="margin-right: 15px; font-size: 16px; font-weight: bold; color: #4CAF50; text-decoration: none;">Галерея</a>
+    <a href="{% url 'gallery:upload_media' %}" style="margin-right: 15px; font-size: 16px; font-weight: bold; color: #4CAF50; text-decoration: none;">Завантажити медіа</a>
+</nav>
+<hr>
+
+<h2 style="text-align: center; font-size: 24px; color: #333;">Завантажити медіа</h2>
+
+<form method="post" enctype="multipart/form-data" style="max-width: 500px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px; transition: background-color 0.3s;">
+        Завантажити
+    </button>
+</form>
+{% endblock %}

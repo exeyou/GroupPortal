@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ survey.title }}{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center; color: #333; font-size: 28px;">{{ survey.title }}</h1>
+<p style="text-align: center; color: #777; margin-bottom: 30px;">Питання {{ question_order }} з {{ total_questions }}</p>
+
+<form method="post" style="max-width: 600px; margin: 0 auto;">
+  {% csrf_token %}
+
+  <div style="margin-bottom: 20px;">
+    <p><strong style="font-size: 20px;">{{ question.text }}</strong></p>
+
+    {% if question.question_type == 'text' %}
+      <input type="text" name="question_{{ question.id }}" class="form-control" required style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc;">
+
+    {% elif question.question_type == 'radio' %}
+      {% for choice in question.choices.all %}
+        <div style="margin-top: 10px;">
+          <label>
+            <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}" required>
+            {{ choice.text }}
+          </label>
+        </div>
+      {% endfor %}
+
+    {% elif question.question_type == 'checkbox' %}
+      {% for choice in question.choices.all %}
+        <div style="margin-top: 10px;">
+          <label>
+            <input type="checkbox" name="question_{{ question.id }}" value="{{ choice.id }}">
+            {{ choice.text }}
+          </label>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Далі</button>
+</form>
+{% endblock %}

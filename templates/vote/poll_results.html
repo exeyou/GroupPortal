@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ branch.title }}{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center; color: #333; font-size: 28px; margin-bottom: 20px;">Результати: {{ poll.question }}</h1>
+
+<ul style="list-style: none; padding: 0; max-width: 500px; margin: 0 auto;">
+    {% for choice in choices %}
+        <li style="background-color: #f9f9f9; margin-bottom: 10px; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 16px; color: #555;">
+            {{ choice.text }} — <strong>{{ choice.vote_set.count }} голосів</strong>
+        </li>
+    {% endfor %}
+</ul>
+
+<p style="text-align: center; margin-top: 20px; font-size: 18px; color: #666;">Всього голосів: <strong>{{ total_votes }}</strong></p>
+{% endblock %}
