@@ -5,6 +5,12 @@
 <div style="max-width: 1200px; margin: 60px auto; padding: 30px; background-color: #f9f9f9; border-radius: 10px;">
     <h1 style="font-size: 36px; text-align: center; margin-bottom: 30px;">📂 Моє Портфоліо</h1>
 
+    <div style="text-align: center; margin-bottom: 30px;">
+        <a href="{% url 'accounts:add_project' %}" style="padding: 12px 24px; background-color: #4CAF50; color: white; font-size: 18px; text-decoration: none; border-radius: 6px;">
+            ➕ Створити новий проект
+        </a>
+    </div>
+
     {% if projects %}
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px;">
             {% for project in projects %}
@@ -18,7 +24,7 @@
 
                     {% if project.link %}
                         <p style="margin-top: 10px;">
-                            🔗 <a href="{{ project.link }}" target="_blank" style="color: #2196F3; word-break: break-all;">Перейти за посиланням</a>
+                            🔗 <a href="{{ project.link }}" target="_blank" style="color: #2196F3; word-break: break-word;">Перейти за посиланням</a>
                         </p>
                     {% endif %}
 
