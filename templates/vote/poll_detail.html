@@ -12,7 +12,15 @@
     </button>
 </form>
 
-{% if existing_vote %}
-<p style="text-align: center; margin-top: 20px; color: #666;">Ви вже голосували: <strong>{{ existing_vote.choice }}</strong></p>
+{% if existing_vote and existing_vote.revoted %}
+    <p style="text-align: center; color: red; margin-top: 20px;">
+        Ви вже переголосували. Подальше голосування неможливе.
+    </p>
+{% elif existing_vote %}
+    <p style="text-align: center; color: #666; margin-top: 20px;">
+        Ви вже голосували: <strong>{{ existing_vote.choice }}</strong><br>
+        Ви можете переголосувати ще один раз.
+    </p>
 {% endif %}
+
 {% endblock %}

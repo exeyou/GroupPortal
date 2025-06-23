@@ -35,9 +35,11 @@ class SurveyResult(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     submitted_at = models.DateTimeField(auto_now=True)
+    attempt = models.PositiveIntegerField(default=1)  # NEW: track 1st or 2nd attempt
 
     class Meta:
-        unique_together = ('user', 'survey')
+        unique_together = ('user', 'survey', 'attempt')  # unique by user + survey + attempt
+
 
 class Answer(models.Model):
     result = models.ForeignKey(SurveyResult, on_delete=models.CASCADE, related_name='answers')

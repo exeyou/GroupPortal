@@ -1,36 +1,19 @@
+# admin.py
+import nested_admin
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from django.template.response import TemplateResponse
-from django.urls import path
-
 from .models import Poll, Choice, Vote
-
-from django.utils.safestring import mark_safe
 import json
 
-class PollAdmin(admin.ModelAdmin):
-    readonly_fields = ('vote_chart',)  # <- add a read-only field for the chart
+class ChoiceInline(nested_admin.NestedTabularInline):
+    model = Choice
+    extra = 1
+    classes = ['collapse', 'choice-inline']
 
-    def change_view(self, request, object_id, form_url='', extra_context=None):
-        poll = Poll.objects.get(pk=object_id)
-        choices = poll.choices.all()
-        vote_data = []
-
-        for choice in choices:
-            count = Vote.objects.filter(poll=poll, choice=choice).count()
-            vote_data.append({'label': choice.text, 'count': count})
-
-        chart_labels = [item['label'] for item in vote_data]
-        chart_data = [item['count'] for item in vote_data]
-
-        extra_context = extra_context or {}
-        extra_context['vote_labels'] = json.dumps(chart_labels)
-        extra_context['vote_counts'] = json.dumps(chart_data)
-        extra_context['poll'] = poll
-
-        return super().change_view(
-            request, object_id, form_url, extra_context=extra_context
-        )
+class PollAdmin(nested_admin.NestedModelAdmin):
+    inlines = [ChoiceInline]
+    list_display = ['question', 'created_at', 'updated_at', 'vote_chart']
+    readonly_fields = ('vote_chart',)
 
     def vote_chart(self, obj):
         choices = obj.choices.all()
@@ -42,10 +25,10 @@ class PollAdmin(admin.ModelAdmin):
 
         for choice in choices:
             labels.append(choice.text)
-            count = Vote.objects.filter(poll=obj, choice=choice).count()
+            count = Vote.objects.filter(choice=choice).count()
             data.append(count)
 
-        chart_id = f"chart-{obj.pk}"
+        chart_id = f"vote-chart-{obj.pk}"
         chart_data = json.dumps({
             'labels': labels,
             'data': data,
@@ -64,8 +47,8 @@ class PollAdmin(admin.ModelAdmin):
                             datasets: [{{
                                 label: 'Votes',
                                 data: data.data,
-                                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
                                 borderWidth: 1
                             }}]
                         }},
@@ -81,6 +64,14 @@ class PollAdmin(admin.ModelAdmin):
             </script>
         """)
 
-    vote_chart.short_description = "Vote Chart"
+    vote_chart.short_description = "Vote Results Chart"
+
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ['text', 'poll']
+
+class VoteAdmin(admin.ModelAdmin):
+    list_display = ['user', 'poll', 'choice', 'voted_at']
 
 admin.site.register(Poll, PollAdmin)
+admin.site.register(Choice, ChoiceAdmin)
+admin.site.register(Vote, VoteAdmin)

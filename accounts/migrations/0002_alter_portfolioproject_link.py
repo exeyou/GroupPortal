@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='portfolioproject',
             name='link',
-            field=models.URLField(blank=True, default='не вказано'),
+            field=models.URLField(blank=True),
         ),
     ]

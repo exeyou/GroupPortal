@@ -23,6 +23,7 @@ class Vote(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
     voted_at = models.DateTimeField(auto_now=True)
+    revoted = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('user', 'poll')

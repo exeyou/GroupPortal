@@ -40,8 +40,5 @@ class Migration(migrations.Migration):
                 ('poll', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='vote.poll')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
-            options={
-                'unique_together': {('user', 'poll')},
-            },
         ),
     ]

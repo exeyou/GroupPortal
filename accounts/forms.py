@@ -29,13 +29,17 @@ class ProjectForm(forms.ModelForm):
         model = PortfolioProject
         fields = ['title', 'description', 'screenshot', 'link', 'file']
 
-    # Optionally validate if there's no link or file provided.
     def clean(self):
         cleaned_data = super().clean()
         link = cleaned_data.get("link")
         file = cleaned_data.get("file")
-        if not link and not file:
-            raise forms.ValidationError("You must provide at least one of link or file.")
+        screenshot = cleaned_data.get("screenshot")
+
+
+        # Check if at least one of media (link, file, or screenshot) is provided
+        if not link and not file and not screenshot:
+            raise forms.ValidationError("You must provide at least one of a link, a file, or a screenshot.")
+
         return cleaned_data
 
 

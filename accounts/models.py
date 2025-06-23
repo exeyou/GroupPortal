@@ -18,7 +18,7 @@ class PortfolioProject(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     screenshot = models.ImageField(upload_to='projects/screenshots/', blank=True, null=True)
-    link = models.URLField(blank=True, default = "не вказано")
+    link = models.URLField(blank=True)
     file = models.FileField(upload_to='projects/files/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

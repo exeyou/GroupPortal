@@ -9,7 +9,7 @@ def is_admin(user):
 @login_required
 def grade_list(request):
     show_user_grades = request.GET.get('show_user_grades') == 'on'
-    grades = Grade.objects.all()
+    grades = Grade.objects.filter(student=request.user)
 
     if show_user_grades:
         grades = grades.filter(student=request.user)
