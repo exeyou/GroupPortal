@@ -26,14 +26,14 @@ def branch_detail(request, branch_id):
         parent_comment = Comment.objects.filter(id=parent_id).first() if parent_id else None
 
         if content:
-            youtube_video_id = extract_youtube_video_id(content)  # <<< New line
+            youtube_video_id = extract_youtube_video_id(content)
             Comment.objects.create(
                 branch=branch,
                 author=request.user,
                 content=content,
                 media=media,
                 parent=parent_comment,
-                youtube_video_id=youtube_video_id  # <<< New line
+                youtube_video_id=youtube_video_id
             )
             return redirect('forum:branch_detail', branch_id=branch_id)
 
