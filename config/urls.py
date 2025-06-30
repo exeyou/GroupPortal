@@ -24,7 +24,7 @@ from django.http import HttpResponse
 from django.core.management import call_command
 
 def load_data_view(request):
-    call_command('loaddata', 'data.json')
+    call_command('loaddata', 'data')
     return HttpResponse("Data loaded.")
 
 urlpatterns = [
