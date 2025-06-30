@@ -19,6 +19,13 @@ from django.urls import path, include
 from home import views as home_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path
+from django.http import HttpResponse
+from django.core.management import call_command
+
+def load_data_view(request):
+    call_command('loaddata', 'data.json')
+    return HttpResponse("Data loaded.")
 
 urlpatterns = [
     path('', home_views.HomeView.as_view(), name="home"),
@@ -32,6 +39,7 @@ urlpatterns = [
     path('materials/', include('materials.urls', namespace='materials')),
     path('grades/', include('grades.urls', namespace='grades')),
     path('poll/', include('poll.urls', namespace='poll')),
+    path("load-data/", load_data_view),
 ]
 
 if settings.DEBUG:
