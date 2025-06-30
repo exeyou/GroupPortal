@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'materials',
     'grades',
     'poll',
-    'nested_admin'
+    'nested_admin',
 ]
 
 MIDDLEWARE = [
